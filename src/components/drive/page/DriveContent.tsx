@@ -15,6 +15,8 @@ interface DriveContentProps {
   onOpenFolder: (folderId: string) => void;
   onRenameFile: (id: string, name: string) => void;
   onRenameFolder: (id: string, name: string) => void;
+  onShareFile: (id: string, name: string) => void;
+  onShareFolder: (id: string, name: string) => void;
   onToggleFileVisibility: (id: string, isPublic: boolean) => void;
   onToggleFolderVisibility: (id: string, isPublic: boolean) => void;
 }
@@ -33,6 +35,8 @@ export function DriveContent({
   onOpenFolder,
   onRenameFile,
   onRenameFolder,
+  onShareFile,
+  onShareFolder,
   onToggleFileVisibility,
   onToggleFolderVisibility,
 }: DriveContentProps) {
@@ -56,6 +60,7 @@ export function DriveContent({
             onDelete={onDeleteFolder}
             onClone={onCloneFolder}
             onMove={onMoveFolder}
+            onShare={onShareFolder}
             onToggleVisibility={onToggleFolderVisibility}
           />
         ))}
@@ -67,6 +72,7 @@ export function DriveContent({
             onDelete={onDeleteFile}
             onClone={onCloneFile}
             onMove={onMoveFile}
+            onShare={onShareFile}
             onToggleVisibility={onToggleFileVisibility}
           />
         ))}

@@ -344,6 +344,38 @@ function* handleToggleFileVisibility(action: AppAction) {
   }
 }
 
+function* handleShareFolder(action: AppAction) {
+  if (action.type !== actionTypes.SHARE_FOLDER_REQUEST) {
+    return;
+  }
+
+  try {
+    yield call([api, "post"], `/folders/${action.payload.id}/share`, {
+      email: action.payload.email,
+      role: action.payload.role,
+    });
+    yield call(refreshDrive, `Folder shared with ${action.payload.email}.`);
+  } catch (error) {
+    yield put(driveActions.driveFailure(getErrorMessage(error)));
+  }
+}
+
+function* handleShareFile(action: AppAction) {
+  if (action.type !== actionTypes.SHARE_FILE_REQUEST) {
+    return;
+  }
+
+  try {
+    yield call([api, "post"], `/files/${action.payload.id}/share`, {
+      email: action.payload.email,
+      role: action.payload.role,
+    });
+    yield call(refreshDrive, `File shared with ${action.payload.email}.`);
+  } catch (error) {
+    yield put(driveActions.driveFailure(getErrorMessage(error)));
+  }
+}
+
 function handleLogout() {
   setAuthToken(null);
 }
@@ -374,6 +406,8 @@ export function* rootSaga() {
       actionTypes.TOGGLE_FILE_VISIBILITY_REQUEST,
       handleToggleFileVisibility,
     ),
+    takeLatest(actionTypes.SHARE_FOLDER_REQUEST, handleShareFolder),
+    takeLatest(actionTypes.SHARE_FILE_REQUEST, handleShareFile),
     takeLatest(actionTypes.LOGOUT, handleLogout),
   ]);
 }

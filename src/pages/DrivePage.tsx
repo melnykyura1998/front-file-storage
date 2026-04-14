@@ -5,6 +5,10 @@ import { Toolbar } from "../components/drive/Toolbar";
 import { CreateFolderModal } from "../components/drive/page/CreateFolderModal";
 import { DriveContent } from "../components/drive/page/DriveContent";
 import { DriveHeader } from "../components/drive/page/DriveHeader";
+import {
+  ShareAccessModal,
+  type ShareAccessTarget,
+} from "../components/drive/page/ShareAccessModal";
 import { DriveSidebar } from "../components/drive/page/DriveSidebar";
 import { authActions, driveActions } from "../store/actions";
 import type { RootState } from "../store/types";
@@ -14,6 +18,9 @@ export function DrivePage() {
   const { token, user } = useSelector((state: RootState) => state.auth);
   const drive = useSelector((state: RootState) => state.drive);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [shareTarget, setShareTarget] = useState<ShareAccessTarget | null>(
+    null,
+  );
   const [folderName, setFolderName] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
@@ -56,6 +63,10 @@ export function DrivePage() {
   const selectFolder = (folderId: string | null) => {
     dispatch(driveActions.setCurrentFolder(folderId));
     dispatch(driveActions.itemsRequest(folderId));
+  };
+
+  const closeShareModal = () => {
+    setShareTarget(null);
   };
 
   return (
@@ -110,6 +121,9 @@ export function DrivePage() {
             onCloneFolder={(id) =>
               dispatch(driveActions.cloneFolderRequest(id))
             }
+            onShareFolder={(id, name) =>
+              setShareTarget({ id, name, resourceType: "folder" })
+            }
             onMoveFolder={(id, direction) =>
               dispatch(driveActions.moveFolderRequest({ id, direction }))
             }
@@ -126,6 +140,9 @@ export function DrivePage() {
             }
             onDeleteFile={(id) => dispatch(driveActions.deleteFileRequest(id))}
             onCloneFile={(id) => dispatch(driveActions.cloneFileRequest(id))}
+            onShareFile={(id, name) =>
+              setShareTarget({ id, name, resourceType: "file" })
+            }
             onMoveFile={(id, direction) =>
               dispatch(driveActions.moveFileRequest({ id, direction }))
             }
@@ -144,6 +161,33 @@ export function DrivePage() {
         onClose={() => setIsCreateModalOpen(false)}
         onChangeFolderName={setFolderName}
         onSubmit={submitFolder}
+      />
+      <ShareAccessModal
+        isLoading={drive.loading}
+        isOpen={Boolean(shareTarget)}
+        target={shareTarget}
+        onClose={closeShareModal}
+        onSubmit={(target, payload) => {
+          if (target.resourceType === "folder") {
+            dispatch(
+              driveActions.shareFolderRequest({
+                id: target.id,
+                email: payload.email,
+                role: payload.role,
+              }),
+            );
+          } else {
+            dispatch(
+              driveActions.shareFileRequest({
+                id: target.id,
+                email: payload.email,
+                role: payload.role,
+              }),
+            );
+          }
+
+          closeShareModal();
+        }}
       />
     </main>
   );

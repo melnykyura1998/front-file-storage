@@ -10,6 +10,7 @@ type IconName =
   | "arrowUp"
   | "arrowDown"
   | "copy"
+  | "share"
   | "trash"
   | "edit"
   | "logout";
@@ -30,6 +31,8 @@ const paths: Record<IconName, string> = {
   arrowUp: "m12 5-5 5m5-5 5 5M12 5v14",
   arrowDown: "m12 19 5-5m-5 5-5-5m5 5V5",
   copy: "M9 9h11v11H9zM4 4h11v11",
+  share:
+    "M14 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8.6 11.4l6.8-3.8M8.6 12.6l6.8 3.8",
   trash:
     "M4 7h16m-10 4v6m4-6v6M8 7l1-3h6l1 3m-9 0 1 13a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-13",
   edit: "M4 20h4l10-10-4-4L4 16v4Zm11-13 4 4",

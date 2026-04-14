@@ -11,6 +11,7 @@ interface FolderCardProps {
   onMove: (id: string, direction: "up" | "down") => void;
   onOpen: (id: string) => void;
   onRename: (id: string, name: string) => void;
+  onShare: (id: string, name: string) => void;
   onToggleVisibility: (id: string, isPublic: boolean) => void;
 }
 
@@ -20,6 +21,7 @@ interface FileCardProps {
   onDelete: (id: string) => void;
   onMove: (id: string, direction: "up" | "down") => void;
   onRename: (id: string, name: string) => void;
+  onShare: (id: string, name: string) => void;
   onToggleVisibility: (id: string, isPublic: boolean) => void;
 }
 
@@ -30,6 +32,7 @@ export function FolderCard({
   onMove,
   onOpen,
   onRename,
+  onShare,
   onToggleVisibility,
 }: FolderCardProps) {
   return (
@@ -69,6 +72,7 @@ export function FolderCard({
             onRename(item.id, nextName);
           }
         }}
+        onShare={() => onShare(item.id, item.name)}
       />
     </article>
   );
@@ -80,6 +84,7 @@ export function FileCard({
   onDelete,
   onMove,
   onRename,
+  onShare,
   onToggleVisibility,
 }: FileCardProps) {
   const fileUrl = useMemo(() => resolveApiUrl(item.url), [item.url]);
@@ -135,6 +140,7 @@ export function FileCard({
             onRename(item.id, nextName);
           }
         }}
+        onShare={() => onShare(item.id, item.name)}
       />
     </article>
   );
@@ -166,6 +172,7 @@ function ActionRow({
   onMoveDown,
   onMoveUp,
   onRename,
+  onShare,
 }: {
   className?: string;
   onClone: () => void;
@@ -173,10 +180,15 @@ function ActionRow({
   onMoveDown: () => void;
   onMoveUp: () => void;
   onRename: () => void;
+  onShare: () => void;
 }) {
   return (
     <div className={`mt-4 flex flex-wrap gap-1.5 ${className ?? ""}`}>
-      <Button variant="secondary" className="px-3 py-1.5 text-xs" onClick={onRename}>
+      <Button
+        variant="secondary"
+        className="px-3 py-1.5 text-xs"
+        onClick={onRename}
+      >
         <Icon name="edit" className="h-4 w-4" />
         Rename
       </Button>
@@ -184,15 +196,31 @@ function ActionRow({
         <Icon name="copy" className="h-4 w-4" />
         Clone
       </Button>
-      <Button variant="ghost" className="px-3 py-1.5 text-xs" onClick={onMoveUp}>
+      <Button variant="ghost" className="px-3 py-1.5 text-xs" onClick={onShare}>
+        <Icon name="share" className="h-4 w-4" />
+        Share
+      </Button>
+      <Button
+        variant="ghost"
+        className="px-3 py-1.5 text-xs"
+        onClick={onMoveUp}
+      >
         <Icon name="arrowUp" className="h-4 w-4" />
         Up
       </Button>
-      <Button variant="ghost" className="px-3 py-1.5 text-xs" onClick={onMoveDown}>
+      <Button
+        variant="ghost"
+        className="px-3 py-1.5 text-xs"
+        onClick={onMoveDown}
+      >
         <Icon name="arrowDown" className="h-4 w-4" />
         Down
       </Button>
-      <Button variant="danger" className="px-3 py-1.5 text-xs" onClick={onDelete}>
+      <Button
+        variant="danger"
+        className="px-3 py-1.5 text-xs"
+        onClick={onDelete}
+      >
         <Icon name="trash" className="h-4 w-4" />
         Delete
       </Button>

@@ -32,6 +32,8 @@ export const actionTypes = {
   MOVE_FILE_REQUEST: "MOVE_FILE_REQUEST",
   TOGGLE_FOLDER_VISIBILITY_REQUEST: "TOGGLE_FOLDER_VISIBILITY_REQUEST",
   TOGGLE_FILE_VISIBILITY_REQUEST: "TOGGLE_FILE_VISIBILITY_REQUEST",
+  SHARE_FOLDER_REQUEST: "SHARE_FOLDER_REQUEST",
+  SHARE_FILE_REQUEST: "SHARE_FILE_REQUEST",
   SET_CURRENT_FOLDER: "SET_CURRENT_FOLDER",
   SET_SUCCESS_MESSAGE: "SET_SUCCESS_MESSAGE",
 } as const;
@@ -71,6 +73,12 @@ export interface MovePayload {
 export interface VisibilityPayload {
   id: string;
   isPublic: boolean;
+}
+
+export interface SharePayload {
+  id: string;
+  email: string;
+  role: "EDITOR" | "VIEWER";
 }
 
 export const authActions = {
@@ -174,6 +182,14 @@ export const driveActions = {
   }),
   toggleFileVisibilityRequest: (payload: VisibilityPayload) => ({
     type: actionTypes.TOGGLE_FILE_VISIBILITY_REQUEST,
+    payload,
+  }),
+  shareFolderRequest: (payload: SharePayload) => ({
+    type: actionTypes.SHARE_FOLDER_REQUEST,
+    payload,
+  }),
+  shareFileRequest: (payload: SharePayload) => ({
+    type: actionTypes.SHARE_FILE_REQUEST,
     payload,
   }),
   driveFailure: (payload: string) => ({
