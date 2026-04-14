@@ -9,7 +9,7 @@ export const api = axios.create({
 });
 
 export function resolveApiUrl(path: string): string {
-  if (/^https?:\/\//.test(path)) {
+  if (/^(https?:\/\/|data:)/.test(path)) {
     return path;
   }
 
