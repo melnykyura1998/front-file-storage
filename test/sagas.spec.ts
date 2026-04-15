@@ -6,15 +6,17 @@ import { actionTypes } from "../src/store/actions";
 import { handleLogin } from "../src/store/sagas";
 
 describe("handleLogin saga", () => {
-  it("dispatches auth success for demo-token login", async () => {
+  it("dispatches auth success for email/password login", async () => {
     const dispatched: unknown[] = [];
-    const originalGet = api.get;
-    api.get = async () => ({
+    const originalPost = api.post;
+    api.post = async () => ({
       data: {
-        id: "demo-user",
-        email: "demo@example.com",
-        name: "Demo User",
-        isDemo: true,
+        token: "token-123",
+        user: {
+          id: "user-1",
+          email: "user@example.com",
+          name: "User",
+        },
       },
     });
 
@@ -26,9 +28,8 @@ describe("handleLogin saga", () => {
       {
         type: actionTypes.LOGIN_REQUEST,
         payload: {
-          email: "demo@example.com",
+          email: "user@example.com",
           password: "password123",
-          useDemoToken: true,
         },
       },
     ).toPromise();
@@ -48,6 +49,6 @@ describe("handleLogin saga", () => {
       true,
     );
 
-    api.get = originalGet;
+    api.post = originalPost;
   });
 });

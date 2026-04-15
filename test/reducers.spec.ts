@@ -13,7 +13,6 @@ describe("rootReducer", () => {
           id: "user-1",
           email: "user@example.com",
           name: "User",
-          isDemo: false,
         },
       }),
     );

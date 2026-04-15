@@ -42,11 +42,6 @@ export function DriveSidebar({
         <p className="font-medium text-slate-900 dark:text-white">
           {user?.email}
         </p>
-        <p>
-          {user?.isDemo
-            ? "Demo access token is active."
-            : "JWT session is active."}
-        </p>
       </div>
 
       <div className="mt-6">

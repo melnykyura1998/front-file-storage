@@ -42,7 +42,6 @@ export interface AuthRequestPayload {
   email: string;
   password: string;
   name?: string;
-  useDemoToken?: boolean;
 }
 
 export interface AuthSuccessPayload {

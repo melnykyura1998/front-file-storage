@@ -36,20 +36,6 @@ export function* handleLogin(action: AppAction) {
   }
 
   try {
-    if (action.payload.useDemoToken) {
-      const demoToken = "demo-drive-token";
-      setAuthToken(demoToken);
-      const response: { data: User } = yield call([api, "get"], "/auth/me");
-      yield put(
-        authActions.authSuccess({
-          token: demoToken,
-          user: response.data,
-        }),
-      );
-      yield call(bootstrapDrive);
-      return;
-    }
-
     const response: {
       data: {
         token: string;

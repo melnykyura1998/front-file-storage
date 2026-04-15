@@ -12,9 +12,9 @@ export function LoginPage() {
     (state: RootState) => state.auth,
   );
   const [mode, setMode] = useState<"login" | "register">("login");
-  const [email, setEmail] = useState("demo@example.com");
-  const [name, setName] = useState("Demo User");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
   if (token) {
     return <Navigate to="/drive" replace />;
@@ -39,30 +39,11 @@ export function LoginPage() {
         <div className="space-y-6 border-b border-slate-200 pb-8 dark:border-slate-800 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
           <div className="space-y-3">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">
-              File Storage MVP
+              File Storage
             </p>
             <h1 className="text-4xl font-semibold text-slate-900 dark:text-white">
               Collaborative image drive with folders, search, and permissions.
             </h1>
-            <p className="max-w-2xl text-base text-slate-600 dark:text-slate-300">
-              The demo keeps the UI intentionally simple while covering upload,
-              nested folders, reordering, visibility management, and
-              synchronized data re-fetching after updates.
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              "React function components + Redux Saga",
-              "NestJS REST API + Swagger",
-              "PostgreSQL + Prisma schema",
-            ].map((item) => (
-              <article
-                key={item}
-                className="rounded-2xl border border-slate-200 p-4 text-sm text-slate-700 dark:border-slate-800 dark:text-slate-300"
-              >
-                {item}
-              </article>
-            ))}
           </div>
         </div>
 
@@ -127,23 +108,6 @@ export function LoginPage() {
                   : mode === "login"
                     ? "Sign in"
                     : "Create account"}
-              </Button>
-              <Button
-                type="button"
-                variant="secondary"
-                fullWidth
-                disabled={isLoading}
-                onClick={() =>
-                  dispatch(
-                    authActions.loginRequest({
-                      email,
-                      password,
-                      useDemoToken: true,
-                    }),
-                  )
-                }
-              >
-                Continue with demo token
               </Button>
             </div>
           </form>

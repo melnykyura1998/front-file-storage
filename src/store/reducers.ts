@@ -66,7 +66,6 @@ function driveReducer(
 ): DriveState {
   switch (action.type) {
     case actionTypes.TREE_REQUEST:
-    case actionTypes.ITEMS_REQUEST:
     case actionTypes.SEARCH_REQUEST:
     case actionTypes.CREATE_FOLDER_REQUEST:
     case actionTypes.UPLOAD_FILE_REQUEST:
@@ -82,6 +81,15 @@ function driveReducer(
     case actionTypes.TOGGLE_FILE_VISIBILITY_REQUEST:
       return {
         ...state,
+        loading: true,
+        error: null,
+        successMessage: null,
+      };
+    case actionTypes.ITEMS_REQUEST:
+      return {
+        ...state,
+        folders: [],
+        files: [],
         loading: true,
         error: null,
         successMessage: null,

@@ -48,45 +48,45 @@ export function DriveContent({
         </section>
       ) : null}
 
-      {loading ? <DriveLoadingState /> : null}
-
-      <section className="flex flex-wrap gap-4">
+      {loading ? <DriveLoadingState/> : <section className="flex flex-wrap gap-4">
         {folders.map((folder) => (
-          <FolderCard
-            key={folder.id}
-            item={folder}
-            onOpen={onOpenFolder}
-            onRename={onRenameFolder}
-            onDelete={onDeleteFolder}
-            onClone={onCloneFolder}
-            onMove={onMoveFolder}
-            onShare={onShareFolder}
-            onToggleVisibility={onToggleFolderVisibility}
-          />
+            <FolderCard
+                key={folder.id}
+                item={folder}
+                onOpen={onOpenFolder}
+                onRename={onRenameFolder}
+                onDelete={onDeleteFolder}
+                onClone={onCloneFolder}
+                onMove={onMoveFolder}
+                onShare={onShareFolder}
+                onToggleVisibility={onToggleFolderVisibility}
+            />
         ))}
         {files.map((file) => (
-          <FileCard
-            key={file.id}
-            item={file}
-            onRename={onRenameFile}
-            onDelete={onDeleteFile}
-            onClone={onCloneFile}
-            onMove={onMoveFile}
-            onShare={onShareFile}
-            onToggleVisibility={onToggleFileVisibility}
-          />
+            <FileCard
+                key={file.id}
+                item={file}
+                onRename={onRenameFile}
+                onDelete={onDeleteFile}
+                onClone={onCloneFile}
+                onMove={onMoveFile}
+                onShare={onShareFile}
+                onToggleVisibility={onToggleFileVisibility}
+            />
         ))}
-      </section>
+      </section>}
+
 
       {!loading && folders.length === 0 && files.length === 0 ? (
-        <section className="rounded-3xl border border-dashed border-slate-300 px-6 py-12 text-center dark:border-slate-700">
-          <p className="text-lg font-semibold text-slate-900 dark:text-white">
-            No items yet
-          </p>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-            Create a folder or upload a JPEG, PNG, or WebP image to get started.
-          </p>
-        </section>
+          <section
+              className="rounded-3xl border border-dashed border-slate-300 px-6 py-12 text-center dark:border-slate-700">
+            <p className="text-lg font-semibold text-slate-900 dark:text-white">
+              No items yet
+            </p>
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              Create a folder or upload a JPEG, PNG, or WebP image to get started.
+            </p>
+          </section>
       ) : null}
     </>
   );
@@ -94,8 +94,10 @@ export function DriveContent({
 
 function DriveLoadingState() {
   return (
-    <section className="rounded-3xl border border-slate-200 bg-slate-50 px-6 py-10 text-center dark:border-slate-800 dark:bg-slate-950">
-      <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900 dark:border-slate-700 dark:border-t-white" />
+      <section
+          className="rounded-3xl border border-slate-200 bg-slate-50 px-6 py-10 text-center dark:border-slate-800 dark:bg-slate-950">
+        <div
+            className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900 dark:border-slate-700 dark:border-t-white" />
       <p className="mt-4 text-sm font-medium text-slate-700 dark:text-slate-200">
         Loading drive content...
       </p>
